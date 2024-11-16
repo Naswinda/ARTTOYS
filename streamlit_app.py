@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 
 # Page title and subtitle
 st.title("NANAS ARTTOYS 🧸")
-st.subheader("Squeeze the Fun, Taste the Joy!")
+st.subheader("The Art of Play.")
 
 # Establish connection
 conn = connect(host='54.179.164.123', port=8099, path='/query/sql', schema='http')
@@ -73,7 +73,7 @@ fig_product = go.Figure(data=[go.Table(
     ),
     cells=dict(
         values=[df_product['TYPE'], df_product['totalQuantity'], df_product['totalSales']],
-        fill=dict(color=[['#F2F2F2', '#FFFFFF'] * (len(df_product) // 2)]),
+        fill=dict(color=[['#FFFFFF'] * (len(df_product) // 2)]),
         align='center',
         font=dict(size=12),
     )
