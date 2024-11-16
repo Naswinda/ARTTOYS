@@ -3,13 +3,33 @@ import pandas as pd
 from pinotdb import connect
 import plotly.express as px
 import plotly.graph_objects as go
+from streamlit_autorefresh import st_autorefresh 
 
 # Set up page layout
 st.set_page_config(layout="wide")
+st_autorefresh(interval=5000)
 
-# Page title and subtitle
-st.title("NANAS ARTTOYS 🧸")
-st.subheader("The Art of Play.")
+# Add custom CSS for title and subtitle color
+st.markdown("""
+    <style>
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #FF6347;  /* Change title color to Tomato */
+            text-align: center;
+        }
+        .subheader {
+            font-size: 24px;
+            font-weight: bold;
+            color: #32CD32;  /* Change subtitle color to LimeGreen */
+            text-align: center;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Title and subtitle
+st.markdown('<p class="title">NANAS ARTTOYS 🧸</p>', unsafe_allow_html=True)
+st.markdown('<p class="subheader">- The Art of Play -</p>', unsafe_allow_html=True)
 
 # Establish connection
 conn = connect(host='54.179.164.123', port=8099, path='/query/sql', schema='http')
@@ -47,7 +67,8 @@ fig_country = px.choropleth(
     color='totalSales',
     hover_name='COUNTRY',
     color_continuous_scale='Viridis',
-    title='Total Sales by Country'
+    title='Total Sales by Country',
+    template="plotly_dark"
 )
 
 # Row 1 - Column 2: Total Quantity and Sales by Product Type (Table)
@@ -81,7 +102,8 @@ fig_product = go.Figure(data=[go.Table(
 fig_product.update_layout(
     title="Total Quantity and Sales by Product Type",
     title_x=0.5,
-    height=400
+    height=400,
+    template="plotly_dark"
 )
 
 # Row 2 - Column 1: Hourly Total Sales (Line Chart)
@@ -111,7 +133,8 @@ fig_hourly.update_layout(
     xaxis_title='Times',
     yaxis_title='Total Sales',
     height=500,
-    width=900
+    width=900,
+    template="plotly_dark"
 )
 
 # Row 2 - Column 2: Gender Distribution (Pie Chart)
@@ -137,10 +160,11 @@ fig_gender = go.Figure(go.Pie(
 fig_gender.update_layout(
     title='Gender Distribution of Users',
     height=500,
-    width=500
+    width=500,
+    template="plotly_dark"
 )
 
-# Layout: 2 Rows, 2 Columns
+# Layout: 2 Rows, 2 Columns with padding
 col1_row1, col2_row1 = st.columns(2)
 with col1_row1:
     st.plotly_chart(fig_country, use_container_width=True)
